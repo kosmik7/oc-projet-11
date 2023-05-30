@@ -1,10 +1,11 @@
-import { Outlet, createBrowserRouter } from "react-router-dom";
+import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 import Home from "./Home";
 import SignIn from "./SignIn";
 import User from "./User";
 import ReduxApp from "./ReduxApp";
 import Header from "../components/Header/";
 import Footer from "../components/Footer/";
+import { useSelector } from "react-redux";
 
 function Layout() {
   return (
@@ -14,6 +15,15 @@ function Layout() {
       <Footer />
     </>
   );
+}
+
+function AuthLayout() {
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  if (!isLoggedIn) {
+    return <Navigate to="/sign-in" />;
+  }
+
+  return <Outlet />;
 }
 
 const router = createBrowserRouter([
@@ -29,12 +39,17 @@ const router = createBrowserRouter([
         element: <SignIn />,
       },
       {
-        path: "/user",
-        element: <User />,
-      },
-      {
         path: "/redux-app",
         element: <ReduxApp />,
+      },
+      {
+        element: <AuthLayout />,
+        children: [
+          {
+            path: "user",
+            element: <User />,
+          },
+        ],
       },
     ],
   },
