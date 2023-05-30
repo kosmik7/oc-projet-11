@@ -1,12 +1,32 @@
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../features/user/userSlice";
 import "./style.scss";
 
 function NavLinks() {
+  const dispatch = useDispatch();
+  const { username, isLoggedIn } = useSelector((state) => state.user);
   return (
     <div>
-      <Link className="main-nav-item" to="/sign-in">
-        <i className="fa fa-user-circle"></i> Sign In
-      </Link>
+      {isLoggedIn ? (
+        <>
+          <Link className="main-nav-item" to="/user">
+            <i className="fa fa-user-circle"></i> {username}
+          </Link>
+          <Link
+            className="main-nav-item"
+            onClick={() => {
+              dispatch(logout());
+            }}
+          >
+            <i className="fa fa-sign-out"></i> Sign Out
+          </Link>
+        </>
+      ) : (
+        <Link className="main-nav-item" to="/sign-in">
+          <i className="fa fa-user-circle"></i> Sign In
+        </Link>
+      )}
     </div>
   );
 }
