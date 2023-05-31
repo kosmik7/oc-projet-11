@@ -11,7 +11,8 @@ function NavLinks() {
       {isLoggedIn ? (
         <>
           <Link className="main-nav-item" to="/user">
-            <i className="fa fa-user-circle"></i> {username}
+            <i className="fa fa-user-circle"></i>
+            {firstName}
           </Link>
           <Link
             className="main-nav-item"
@@ -19,12 +20,12 @@ function NavLinks() {
               dispatch(logout());
             }}
           >
-            <i className="fa fa-sign-out"></i> Sign Out
+            <i className="fa fa-sign-out"></i>Sign Out
           </Link>
         </>
       ) : (
         <Link className="main-nav-item" to="/sign-in">
-          <i className="fa fa-user-circle"></i> Sign In
+          <i className="fa fa-user-circle"></i>Sign In
         </Link>
       )}
     </div>
