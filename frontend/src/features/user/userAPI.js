@@ -59,6 +59,37 @@ export const fetchUser = createAsyncThunk(
   }
 );
 
+export const editUsername = createAsyncThunk(
+  "users/edit",
+  async ({ token, username }, thunkAPI) => {
+    console.log(token, username);
+    try {
+      const response = await fetch(
+        "http://localhost:3001/api/v1/user/profile",
+        {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            userName: username,
+          }),
+        }
+      );
+      const data = await response.json();
+      if (response.ok) {
+        console.log("data:", data);
+        return data;
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 // Composant pour vérifier le token auprès du serveur et importer le profil utilisateur
 export const UserProfile = () => {

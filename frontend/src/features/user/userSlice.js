@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login, fetchUser } from "./userAPI";
+import { login, fetchUser, editUsername } from "./userAPI";
 
 const token =
   localStorage.getItem("token") !== null ? localStorage.getItem("token") : null;
@@ -54,6 +54,18 @@ const userSlice = createSlice({
         state.token = null;
         state.loading = false;
         state.isLoggedIn = false;
+      })
+      .addCase(editUsername.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(editUsername.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = action.payload.body;
+      })
+      .addCase(editUsername.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
