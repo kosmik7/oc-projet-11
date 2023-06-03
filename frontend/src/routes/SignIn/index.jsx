@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { login } from "../../features/user/userAPI";
@@ -7,11 +7,15 @@ import "./style.scss";
 
 export default function SignIn() {
   const dispatch = useDispatch();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { isLoggedIn } = useSelector((state) => state.user);
+  const { error, isLoggedIn } = useSelector((state) => state.user);
 
+  useEffect(() => {
+    if (error) {
+      alert(error.message);
+    }
+  }, [error]);
 
   if (isLoggedIn) {
     return <Navigate to="/user" />;
