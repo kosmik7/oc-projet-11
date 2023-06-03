@@ -1,13 +1,16 @@
 import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { UserProfile } from "../features/user/userAPI";
+
 import Home from "./Home";
 import SignIn from "./SignIn";
 import User from "./User";
 import ReduxApp from "./ReduxApp";
 import Header from "../components/Header/";
 import Footer from "../components/Footer/";
-import { useSelector } from "react-redux";
 
 function Layout() {
+  UserProfile();
   return (
     <>
       <Header />

@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const login = createAsyncThunk(
@@ -57,3 +59,15 @@ export const fetchUser = createAsyncThunk(
   }
 );
 
+
+// Composant pour vérifier le token auprès du serveur et importer le profil utilisateur
+export const UserProfile = () => {
+  const dispatch = useDispatch();
+  const { loading, token, data } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (!loading && token && !data) {
+      dispatch(fetchUser(token));
+    }
+  }, [dispatch, loading, token, data]);
+};
