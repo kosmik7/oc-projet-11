@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { login } from "../../features/user/userSlice";
+import { login } from "../../features/user/userAPI";
 
 import "./style.scss";
 
@@ -10,21 +10,17 @@ export default function SignIn() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(
-      login({
-        email: email,
-        password: password,
-      })
-    );
-  };
-
   const { isLoggedIn } = useSelector((state) => state.user);
+
+
   if (isLoggedIn) {
     return <Navigate to="/user" />;
   }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(login({ email, password }));
+  };
 
   return (
     <main className="main bg-dark">

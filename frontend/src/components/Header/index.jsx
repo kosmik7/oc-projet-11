@@ -5,14 +5,14 @@ import "./style.scss";
 
 function NavLinks() {
   const dispatch = useDispatch();
-  const { username, isLoggedIn } = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
   return (
     <div>
-      {isLoggedIn ? (
+      {user?.isLoggedIn ? (
         <>
           <Link className="main-nav-item" to="/user">
             <i className="fa fa-user-circle"></i>
-            {firstName}
+            {user.data?.firstName}
           </Link>
           <Link
             className="main-nav-item"
