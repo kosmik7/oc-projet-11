@@ -9,6 +9,26 @@
   color: #fff;
   font-weight: bold;
   padding: 10px;
+
+  &-container {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+}
+
+.editUserForm {
+  margin: 22px 0;
+
+  display: grid;
+  grid-template-columns: max-content max-content;
+  justify-content: center;
+  align-items: center;
+  gap: 15px 10px;
+  input {
+    padding: 3px;
+  }
 }
 
 .transaction-button {
