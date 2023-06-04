@@ -12,7 +12,7 @@ function NavLinks() {
         <>
           <Link className="main-nav-item" to="/user">
             <i className="fa fa-user-circle"></i>
-            {user.data?.firstName}
+            {user.data?.userName}
           </Link>
           <Link
             className="main-nav-item"
