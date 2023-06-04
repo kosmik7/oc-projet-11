@@ -1,9 +1,9 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
   title: Bank Argent API documentation
-  description: Contains all available API endpoints in this codebase
-  version: '1.0.0'
-  termsOfService: 'http://swagger.io/terms/'
+  description: Contains all available API endpoints in this codebase plipplop
+  version: "1.0.0"
+  termsOfService: "http://swagger.io/terms/"
 host: localhost:3001
 basePath: /api/v1
 schemes:
@@ -21,17 +21,17 @@ paths:
           description: Login Payload
           required: true
           schema:
-            $ref: '#/definitions/Login'
+            $ref: "#/definitions/Login"
       produces:
         - application/json
       responses:
-        '200':
+        "200":
           description: Login Successfully
           schema:
-            $ref: '#/definitions/LoginResponse'
-        '400':
+            $ref: "#/definitions/LoginResponse"
+        "400":
           description: Invalid Fields
-        '500':
+        "500":
           description: Internal Server Error
   /user/signup:
     post:
@@ -45,17 +45,17 @@ paths:
           description: Signup Payload
           required: true
           schema:
-            $ref: '#/definitions/User'
+            $ref: "#/definitions/User"
       produces:
         - application/json
       responses:
-        '200':
+        "200":
           description: Signup Successfully
           schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
+            $ref: "#/definitions/ApiResponse"
+        "400":
           description: Invalid Fields
-        '500':
+        "500":
           description: Internal Server Error
   /user/profile:
     post:
@@ -66,15 +66,15 @@ paths:
       summary: User Profile API
       description: API for fetching a user profile
       #produces:
-       # - application/json
+      # - application/json
       responses:
-        '200':
+        "200":
           description: User profile retrieved successully
           schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
+            $ref: "#/definitions/ApiResponse"
+        "400":
           description: Invalid Fields
-        '500':
+        "500":
           description: Internal Server Error
     put:
       security:
@@ -89,18 +89,169 @@ paths:
           description: Update user profile attributes
           required: true
           schema:
-            $ref: '#/definitions/UserProfile'
+            $ref: "#/definitions/UserProfile"
       produces:
         - application/json
       responses:
-        '200':
+        "200":
           description: User profile retrieved successully
           schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
+            $ref: "#/definitions/ApiResponse"
+        "400":
           description: Invalid Fields
-        '500':
+        "500":
           description: Internal Server Error
+  # retourne un array contenant les catégories disponibles pour le détail des transactions
+  # méthode: GET
+  # route: /transactions/categories
+  # paramètres:
+  # réponses:
+  #   200  An array of all categories retrieved successully
+  #   500  Internal server error
+  /transactions/categories:
+    get:
+      tags:
+        - Transactions Module
+      summary: List categories
+      description: Returns an array of all categories available for transactions details
+      responses:
+        "200":
+          description: Transactions categories retrieved successully
+          schema:
+            $ref: "#/definitions/TransactionsCategories"
+        "500":
+          description: Internal server error
+  # retourne les transactions du mois en cours
+  # méthode: GET
+  # route: /transactions/{userId}
+  # paramètres: token, userId (user/profile.id)
+  # réponses:
+  #   200  User transactions retrieved successully
+  #   400  Bad request
+  #   401  Unauthorized
+  #   500  Internal server error
+  /transactions/{userId}:
+    get:
+      tags:
+        - Transactions Module
+      summary: User transactions
+      description: Return transactions of {userId}
+      security:
+        - Bearer: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: id of the user
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        "200":
+          description: User transactions retrieved successully
+          schema:
+            $ref: "#/definitions/Transactions"
+        "400":
+          description: Bad request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  # retourne les details de la transaction correspondant à 'transactionId' (type, catégorie et note)
+  # méthode: GET
+  # route: /transactions/{userId}/{transactionId}
+  # paramètres: token, userId, transactionId
+  # réponses:
+  #   200  Transactions details retrieved successully
+  #   400  Bad request
+  #   401  Unauthorized
+  #   500  Internal server error
+  /transactions/{userId}/{id}:
+    get:
+      tags:
+        - Transactions Module
+      summary: Details of a transaction
+      description: Return the details (type, category & note) of {userId}/{transactionId}
+      security:
+        - Bearer: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: id of the user
+          schema:
+            type: integer
+            format: int64
+            example: 1
+        - name: id
+          in: path
+          required: true
+          description: id of the transaction
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        "200":
+          description: Transactions details retrieved successully
+          schema:
+            $ref: "#/definitions/TransactionDetails"
+        "400":
+          description: Bad request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+    # ajoute, modifie ou supprime des details (catégorie et note) sur la transaction correspondant à 'transactionId'
+    # méthode: PUT
+    # route: /transactions/{id}
+    # paramètres: token, userId, transactionId, category (facultatif), note (facultatif)
+    # réponses:
+    #   200  Transactions details updated successully
+    #   400  Bad request
+    #   401  Unauthorized
+    #   500  Internal server error
+    put:
+      tags:
+        - Transactions Module
+      summary: Details of a transaction
+      description: Edit the details (category & note) of {userId}/{transactionId}
+      security:
+        - Bearer: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: id of the user
+          schema:
+            type: integer
+            format: int64
+            example: 1
+        - name: id
+          in: path
+          required: true
+          description: id of the transaction
+          schema:
+            type: integer
+            format: int64
+            example: 1
+        - in: body
+          name: body
+          description: Update details of the transaction
+          schema:
+            $ref: "#/definitions/TransactionDetailsEditable"
+      responses:
+        "201":
+          description: Transactions details edited successully
+          schema:
+            $ref: "#/definitions/TransactionDetails"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -155,4 +306,49 @@ definitions:
     type: object
     properties:
       userName:
+        type: string
+  TransactionsCategories:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+  Transactions:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+        date:
+          type: integer
+        description:
+          type: string
+        amount:
+          type: integer
+        details:
+          allOf:
+            - $ref: "#/definitions/TransactionDetails"
+            - type: object
+  TransactionDetails:
+    type: object
+    properties:
+      type:
+        type: string
+      category:
+        type: integer
+        format: int64
+      note:
+        type: string
+  TransactionDetailsEditable:
+    type: object
+    properties:
+      category:
+        type: integer
+        format: int64
+      note:
         type: string
