@@ -146,7 +146,7 @@ paths:
           schema:
             type: integer
             format: int64
-            example: 1
+            example: 637298
       responses:
         "200":
           description: User transactions retrieved successully
@@ -158,10 +158,10 @@ paths:
           description: Unauthorized
         "500":
           description: Internal server error
-  # retourne les details de la transaction correspondant à 'transactionId' (type, catégorie et note)
+  # retourne les details de la transaction correspondant à 'id' (type, catégorie et note)
   # méthode: GET
-  # route: /transactions/{userId}/{transactionId}
-  # paramètres: token, userId, transactionId
+  # route: /transactions/{userId}/{id}
+  # paramètres: token, userId, id
   # réponses:
   #   200  Transactions details retrieved successully
   #   400  Bad request
@@ -172,7 +172,7 @@ paths:
       tags:
         - Transactions Module
       summary: Details of a transaction
-      description: Return the details (type, category & note) of {userId}/{transactionId}
+      description: Return the details (type, category & note) of {userId}/{id}
       security:
         - Bearer: []
       parameters:
@@ -183,7 +183,7 @@ paths:
           schema:
             type: integer
             format: int64
-            example: 1
+            example: 637298
         - name: id
           in: path
           required: true
@@ -191,7 +191,7 @@ paths:
           schema:
             type: integer
             format: int64
-            example: 1
+            example: 7425
       responses:
         "200":
           description: Transactions details retrieved successully
@@ -203,10 +203,10 @@ paths:
           description: Unauthorized
         "500":
           description: Internal server error
-    # ajoute, modifie ou supprime des details (catégorie et note) sur la transaction correspondant à 'transactionId'
+    # ajoute ou modifie des details (catégorie et note) sur la transaction correspondant à 'id'
     # méthode: PUT
-    # route: /transactions/{id}
-    # paramètres: token, userId, transactionId, category (facultatif), note (facultatif)
+    # route: /transactions/{userId}/{id}
+    # paramètres: token, userId, id, category (facultatif), note (facultatif)
     # réponses:
     #   200  Transactions details updated successully
     #   400  Bad request
@@ -215,8 +215,8 @@ paths:
     put:
       tags:
         - Transactions Module
-      summary: Details of a transaction
-      description: Edit the details (category & note) of {userId}/{transactionId}
+      summary: Edit details of a transaction
+      description: Edit the details (category & note) of {userId}/{id}
       security:
         - Bearer: []
       parameters:
@@ -227,7 +227,7 @@ paths:
           schema:
             type: integer
             format: int64
-            example: 1
+            example: 637298
         - name: id
           in: path
           required: true
@@ -235,7 +235,7 @@ paths:
           schema:
             type: integer
             format: int64
-            example: 1
+            example: 7425
         - in: body
           name: body
           description: Update details of the transaction
@@ -325,15 +325,11 @@ definitions:
         id:
           type: integer
         date:
-          type: integer
+          type: string
         description:
           type: string
         amount:
           type: integer
-        details:
-          allOf:
-            - $ref: "#/definitions/TransactionDetails"
-            - type: object
   TransactionDetails:
     type: object
     properties:
