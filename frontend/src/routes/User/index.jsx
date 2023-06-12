@@ -75,6 +75,21 @@ function EditUserForm() {
   );
 }
 
+function Account({ title, amount }) {
+  return (
+    <section className="account">
+      <div className="account-content-wrapper">
+        <h3 className="account-title">{title}</h3>
+        <p className="account-amount">{amount}</p>
+        <p className="account-amount-description">Available Balance</p>
+      </div>
+      <div className="account-content-wrapper cta">
+        <button className="transaction-button">View transactions</button>
+      </div>
+    </section>
+  );
+}
+
 export default function User() {
   return (
     <main className="main bg-dark">
@@ -82,36 +97,9 @@ export default function User() {
         <EditUserForm />
       </div>
       <h2 className="sr-only">Accounts</h2>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Checking (x8349)</h3>
-          <p className="account-amount">$2,082.79</p>
-          <p className="account-amount-description">Available Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Savings (x6712)</h3>
-          <p className="account-amount">$10,928.42</p>
-          <p className="account-amount-description">Available Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Credit Card (x8349)</h3>
-          <p className="account-amount">$184.30</p>
-          <p className="account-amount-description">Current Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
+      <Account title="Argent Bank Checking (x8349)" amount="$2,082.79" />
+      <Account title="Argent Bank Savings (x6712)" amount="$10,928.42" />
+      <Account title="Argent Bank Credit Card (x8349)" amount="$184.30" />
     </main>
   );
 }
