@@ -44,7 +44,6 @@ const userSlice = createSlice({
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.data = action.payload.body;
-        state.token = token;
         state.loading = false;
         state.isLoggedIn = true;
       })
