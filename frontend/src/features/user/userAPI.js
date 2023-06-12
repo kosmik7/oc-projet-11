@@ -62,7 +62,6 @@ export const fetchUser = createAsyncThunk(
 export const editUsername = createAsyncThunk(
   "users/edit",
   async ({ token, username }, thunkAPI) => {
-    console.log(token, username);
     try {
       const response = await fetch(
         "http://localhost:3001/api/v1/user/profile",
@@ -80,7 +79,6 @@ export const editUsername = createAsyncThunk(
       );
       const data = await response.json();
       if (response.ok) {
-        console.log("data:", data);
         return data;
       } else {
         return thunkAPI.rejectWithValue(data);
